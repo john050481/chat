@@ -1,0 +1,58 @@
+<nav class="navbar navbar-default" role="navigation">
+  <ul class="nav navbar-nav">
+    <li><a href="/">Главная</a></li>
+    <li><a href="/error">Error</a></li>
+    <% if (user) { %>
+    <li><a href="/chat">Чат</a></li>
+    <% } %>
+  </ul>
+  <ul id='exit' class="nav navbar-nav navbar-right">
+    <% if (user) { %>
+       <li><a id='linkExit' href="">Выйти (<%=user.get('username')%>)</a></li>
+       <li><a id='linkExitAll' href="">Выйти со всех устройств!</a></li>
+    <% } else { %>
+    <li><a href="/login">Войти</a></li>
+    <% } %>
+  </ul>
+</nav>
+
+<script>
+
+/*
+<a id='linkExit' href="" onclick="$('<form method=POST action=/logout>').appendTo('body').submit();return false">
+*/
+
+  function exit(e) {
+    e.preventDefault();
+    let formExit = document.createElement('form');
+    formExit.action = '/logout';
+    formExit.method = 'POST';
+
+    let logoutAll = document.createElement('input');
+    logoutAll.type = 'checkbox';
+    logoutAll.name = 'logoutAll';
+    logoutAll.checked = e.target.id === 'linkExitAll' ? true : false;
+    formExit.append(logoutAll);
+/*
+    if (e.target.id === 'linkExit') {
+      formExit.innerHTML = `<input type='checkbox' name="logoutAll">`;
+    } else if (e.target.id === 'linkExitAll') {
+      formExit.innerHTML = `<input type='checkbox' name="logoutAll" checked>`;
+    };
+*/
+    document.body.append(formExit);
+    formExit.submit();
+    formExit.remove();
+  };
+
+  let linkExit = document.getElementById('linkExit');
+  if (linkExit) {
+    linkExit.addEventListener('click', exit);
+  };
+
+  let linkExitAll = document.getElementById('linkExitAll');
+  if (linkExitAll) {
+    linkExitAll.addEventListener('click', exit);
+  };
+
+</script>
