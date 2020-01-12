@@ -3,6 +3,7 @@ let config = require('.././config');
 let cookie = require('cookie');
 var cookieParser = require('cookie-parser');
 var User = require('.././models/user').User;
+var ChatMessage = require('.././models/chatMessage').ChatMessage;
 const ServerIO = require('socket.io');
 
 var async = require('async');
@@ -130,6 +131,12 @@ module.exports = function (serverHttp) {
     socket.broadcast.emit('join', username);
 
     socket.on('message', function (text, cb) {
+
+      ChatMessage.writeMessage(socket.nsp.name, userId, username, text, new Date(), function(err, messageId) {
+        if (err) return console.log(err);
+        console.log('messageId = ', messageId);
+      });
+
       socket.broadcast.emit('message', text, username, userId);
       cb && cb(username, userId);
       socket.broadcast.emit('sendNews', 'new messege on nsp: ' + text);
@@ -172,6 +179,17 @@ module.exports = function (serverHttp) {
 
         socket.emit('getUserInfo', userInfo);
         cb && cb(userInfo);
+      });
+    });
+
+    socket.on('getAllMessageForNsp', function(cb) {
+      console.log('- - - - - getAllMessageForNsp - - - - -');
+      ChatMessage.find({nspName: socket.nsp.name}, function(err, messages) {
+        if (err) return console.log(err);
+
+        console.log("messages result: ", messages);
+        socket.emit('getAllMessageForNsp', messages);
+        cb && cb(messages)
       });
     });
 
