@@ -16,10 +16,10 @@ function getAllIoSocketsForNspAndUserId(nsp, user) {
 
   let socketsResult = new Map();
   let sockets = nsp.connected;
-  for (let key in sockets) {
-    if (!sockets[key].handshake.user) continue;
-    let {_id, username, id: userId} = sockets[key].handshake.user;
-    if (_id.equals(userObjectID)) socketsResult.set(key, {socketId: key, username, userId});
+  for (let socketId in sockets) {
+    if (!sockets[socketId].handshake.user) continue;
+    let {_id, username, id: userId} = sockets[socketId].handshake.user;
+    if (_id.equals(userObjectID)) socketsResult.set(socketId, {socketId, username, userId});
   };
   return Array.from(socketsResult.values());
 };
