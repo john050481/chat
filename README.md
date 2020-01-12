@@ -9,7 +9,7 @@ for example: http://94.232.8.10:9300
 5. cd chat
 6. npm i
 7. node --inspect app.js
-8. http://localhost:3000
+8. http://localhost:3000 (open url in multiple browsers)
 
 # source
 https://learn.javascript.ru/screencast/nodejs#nodejs-1-chat-1
