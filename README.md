@@ -10,3 +10,6 @@ for example: http://94.232.8.10:9300
 6. npm i
 7. node --inspect app.js
 8. http://localhost:3000
+
+# source
+https://learn.javascript.ru/screencast/nodejs#nodejs-1-chat-1
