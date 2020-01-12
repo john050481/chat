@@ -32,8 +32,8 @@ app.use(cookieParser());
 app.use((req, res, next)=>{
   //console.log("!!1reQ.cookies = ", req.cookies);
   //console.log("!!1reS.cookies = ", res.cookies);
-  res.cookie('rememberme', '1', {"maxAge": 300000});
-  res.cookie('obj', {a: 1, b: "q", c: new Date()});
+  res.cookie('rememberme5min', '1', {"maxAge": 300000});
+  res.cookie('obj', {a: 1, b: "q", c: new Date(), d: {d1: 'd1'}});
   next();
 });
 
@@ -49,7 +49,14 @@ app.use(session({
 app.use((req, res, next)=>{
   //console.log("!!2reQ.cookies = ", req.cookies);
   //console.log("!!2reS.cookies = ", res.cookies);
-  console.log(' - - - req.session.id = ', req.session.id, req.cookies.sid);
+  //console.log(' - - - req.session.id = ', req.session.id, req.cookies.sid);
+  /*
+  console.log(' - - - req.baseUrl = ', req.baseUrl);
+  console.log(' - - - req.originalUrl = ', req.originalUrl);
+  console.log(' - - - req.path = ', req.path);
+  console.log(' - - - req.query = ', req.query);
+  console.log(' - - - req.params = ', req.params);
+  */
   //console.log("!!2reQ.session = ", ' req.session = ', req.session, ' req.session.id = ', req.session.id);
   //console.log("!!2reS.session = ", res.session);
   next();
