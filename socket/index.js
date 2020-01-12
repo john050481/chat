@@ -19,7 +19,7 @@ function getAllIoSocketsForNspAndUserId(nsp, user) {
   for (let key in sockets) {
     if (!sockets[key].handshake.user) continue;
     let {_id, username, id: userId} = sockets[key].handshake.user;
-    if (_id.equals(userObjectID)) socketsResult.set(key, {socketIoSessionId: key, username, userId});
+    if (_id.equals(userObjectID)) socketsResult.set(key, {socketId: key, username, userId});
   };
   return Array.from(socketsResult.values());
 };
