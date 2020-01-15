@@ -132,14 +132,13 @@ module.exports = function (serverHttp) {
 
     socket.on('message', function (text, cb) {
 
-      ChatMessage.writeMessage(socket.nsp.name, userId, username, text, new Date(), function(err, messageId) {
+      ChatMessage.writeMessage(socket.nsp.name, userId, username, text, function(err, messageModel) {
         if (err) return console.log(err);
-        console.log('messageId = ', messageId);
+        console.log('writenMessageModel = ', messageModel);
+        socket.broadcast.emit('message', text, username, userId, messageModel.get('created'));
+        cb && cb( username, userId, messageModel.get('created') );
+        socket.broadcast.emit('sendNews', 'new messege on nsp: ' + text);
       });
-
-      socket.broadcast.emit('message', text, username, userId);
-      cb && cb(username, userId);
-      socket.broadcast.emit('sendNews', 'new messege on nsp: ' + text);
     });
 
     socket.on('getAllOnLineUsersForNsp', function (anyData, cb) {

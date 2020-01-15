@@ -29,13 +29,13 @@ var schema = new Schema({
   }
 });
 
-schema.statics.writeMessage = function(nspName, userId, username, message, created, callback) {
+schema.statics.writeMessage = function(nspName, userId, username, message, callback) {
   var ChatMessage = this;
 
-  var chatMessage = new ChatMessage({nspName, userId, username, message, created});
+  var chatMessage = new ChatMessage({nspName, userId, username, message});
   chatMessage.save(function(err) {
     if (err) return callback(err);
-    callback(null, chatMessage.get('id') )
+    callback(null, chatMessage )
   });
 };
 
