@@ -22,7 +22,7 @@ exports.post = function(req, res, next) {
   function findUserSessions(userId) {
     let db = mongoStore.db;
     let regexp = new RegExp(`.*?\"userId\":\"${userId}\".*?`);
-    query = { "session": { $regex: regexp } };
+    let query = { "session": { $regex: regexp } };
     if (!logoutAll) query._id = reqSessionId;
     // - - - - - - - - console.log(' ===== query ===== \n', query);
     return new Promise((resolve, reject) => {
